@@ -1,0 +1,30 @@
+{
+  "name": "browser-test-mocha",
+  "version": "0.1.0",
+  "description": "Sets up a test server using Mocha and Chai to test against a browser environment",
+  "bin": "cli/browser-test-mocha.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "browser",
+    "test",
+    "mocha",
+    "testing",
+    "chai"
+  ],
+  "author": "Robert Corponoi",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^3.0.0",
+    "fastify": "^2.7.1",
+    "fastify-static": "^2.5.0",
+    "fs-extra": "^8.1.0",
+    "jsdom": "^15.1.1",
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  }
+}
