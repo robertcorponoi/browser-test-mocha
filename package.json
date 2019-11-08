@@ -1,6 +1,6 @@
 {
   "name": "browser-test-mocha",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Sets up a test server using Mocha and Chai to test against a browser environment",
   "bin": "cli/browser-test-mocha.js",
   "scripts": {

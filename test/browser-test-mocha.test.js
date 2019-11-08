@@ -10,6 +10,8 @@ describe('browser-test-mocha CLI', () => {
 
   it('should print the correct version of the program', function (done) {
 
+    this.timeout(5000);
+
     const cmd = shell.exec('node cli/browser-test-mocha.js -V', { async: true });
 
     cmd.stdout.on('data', (data) => {
