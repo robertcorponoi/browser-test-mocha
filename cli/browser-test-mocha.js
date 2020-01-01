@@ -9,6 +9,8 @@ const server = require('../src/server');
 
 const { JSDOM } = jsdom;
 
+let testFiles;
+
 /**
  * When the version of the program is requested just use the version from the package.json file so that
  * we don't have to update this.
@@ -19,7 +21,8 @@ program.version(pkg.version);
  * Set the files flag which is used to specify the files to add to be tested and then pass them to the
  * optionsToArray method to make it easier to work with.
  */
-program.option('-f, --files <items>', 'Comma separated list of files of test files', optionToArray);
+// program.option('-f, --files <items>', 'Comma separated list of files of test files', optionToArray);
+program.arguments('<files>').action(files => testFiles = optionToArray(files));
 
 /**
  * Since we want to avoid the many callbacks associated with some of the filesystem operations, we use an
@@ -31,7 +34,6 @@ program.option('-f, --files <items>', 'Comma separated list of files of test fil
  * @async
  */
 async function main() {
-
   program.parse(process.argv);
 
   /**
@@ -43,8 +45,7 @@ async function main() {
    * 4. Write a new index.html file with the new DOM that includes the user's test files.
    * 5. Finally, start the server on the first available port.
    */
-  if (program.files) {
-
+  if (testFiles) {
     const file = await fs.readFile(path.resolve(__dirname, '../src/base.html'), 'utf-8');
 
     const dom = new JSDOM(file);
@@ -53,38 +54,32 @@ async function main() {
 
     console.info('Removing old tests...');
 
-    await fs.remove(path.resolve(__dirname, '../src/index.html')).catch(err => { throw new Error(err) });
+    await fs.remove(path.resolve(__dirname, '../src/index.html')).catch(err => { throw err; });
 
-    await fs.emptyDir(path.resolve(__dirname, '../src/scripts')).catch(err => { throw new Error(err) });
+    await fs.emptyDir(path.resolve(__dirname, '../src/scripts')).catch(err => { throw err; });
 
-    await Promise.all(program.files.map(async file => {
-
+    await Promise.all(testFiles.map(async file => {
       console.info(`Adding ${file}...`);
 
       const script = document.createElement('script');
-
       script.type = 'module';
-
       script.src = `./scripts/${path.basename(file)}`;
 
-      const data = await fs.readFile(file, 'utf-8').catch(err => { throw new Error(err) });
+      const data = await fs.readFile(file, 'utf-8').catch(err => { throw err; });
 
-      await fs.writeFile(path.resolve(__dirname, `../src/scripts/${path.basename(file)}`), data).catch(err => { throw new Error(err) });
+      await fs.writeFile(path.resolve(__dirname, `../src/scripts/${path.basename(file)}`), data).catch(err => { throw err; });
 
       const insertPoint = document.querySelector('.mocha-init');
 
       insertPoint.parentNode.insertBefore(script, insertPoint.nextSibling);
-
     }));
 
-    await fs.outputFile(path.resolve(__dirname, '../src/index.html'), document.documentElement.innerHTML).catch(err => { throw new Error(err) });
+    await fs.outputFile(path.resolve(__dirname, '../src/index.html'), document.documentElement.innerHTML).catch(err => { throw err; });
 
     console.info('Starting server...');
 
     server();
-
   }
-
 }
 
 main();
@@ -97,7 +92,5 @@ main();
  * @returns {Array<string>}
  */
 function optionToArray(list) {
-
   return list.split(',');
-
 }

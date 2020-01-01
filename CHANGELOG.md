@@ -1,3 +1,12 @@
+1.0.0 / 2020-01-01
+==================
+- [FEATURE] Added support for sinon to be used inside test files.
+- [FEATURE] Removes files option and made it an argument.
+- [MISC] Updated all dependencies to their latest versions.
+- [MISC] Added badges to README.
+- [MISC] Updated README with latest information.
+- [MISC] Updated license year to reflect new year.
+
 0.1.2 / 2019-11-08
 ==================
 - Updated all dependencies to their latest versions.
