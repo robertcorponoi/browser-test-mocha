@@ -1,3 +1,7 @@
+1.0.1 / 2020-01-01
+==================
+- [MISC] Updated license year to match new year.
+
 1.0.0 / 2020-01-01
 ==================
 - [FEATURE] Added support for sinon to be used inside test files.
