@@ -26,6 +26,6 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "concat-stream": "^2.0.0",
-    "mocha": "^6.2.2"
+    "mocha": "^7.1.1"
   }
 }
